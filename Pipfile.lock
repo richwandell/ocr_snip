@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ca16f455ba6c0d7ccf19b72fa0f34836c8be9073483a0ea445a6ed8c8e567989"
+            "sha256": "f1ae92a9c1e914207e07616335fdebc0eefe400d6a8ac3825a99846576ae2a37"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,6 +16,14 @@
         ]
     },
     "default": {
+        "infi-systray": {
+            "hashes": [
+                "sha256:4041ab3693f7f00a6b2b2d7b553bf60fce8941708b83e32261ca40926952ed0d"
+            ],
+            "index": "pypi",
+            "markers": "sys_platform == 'win32'",
+            "version": "==0.1.12"
+        },
         "numpy": {
             "hashes": [
                 "sha256:0ee77786eebbfa37f2141fd106b549d37c89207a0d01d8852fde1c82e9bfc0e7",
@@ -117,6 +125,13 @@
             "index": "pypi",
             "version": "==8.0.1"
         },
+        "pyperclip": {
+            "hashes": [
+                "sha256:9abef1e79ce635eb62309ecae02dfb5a3eb952fa7d6dce09c1aef063f81424d3"
+            ],
+            "index": "pypi",
+            "version": "==1.8.1"
+        },
         "pyqt5": {
             "hashes": [
                 "sha256:29889845688a54d62820585ad5b2e0200a36b304ff3d7a555e95599f110ba4ce",
@@ -153,6 +168,13 @@
                 "sha256:f168f0a7f32b81bfeffdf003c36f25d81c97dee5eb67072a5183e761fe250f13"
             ],
             "version": "==12.8.1"
+        },
+        "pytesseract": {
+            "hashes": [
+                "sha256:b79641b7915ff039da22d5591cb2f5ca6cb0ed7c65194c9c750360dc6a1cc87f"
+            ],
+            "index": "pypi",
+            "version": "==0.3.6"
         },
         "pywin32": {
             "hashes": [
