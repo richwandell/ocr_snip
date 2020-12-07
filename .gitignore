@@ -1,4 +1,10 @@
 .idea
 .venv
 scratch
-tesseract
+tesseract/**/*
+vcpkg
+tessdata
+build/tesseract.exe
+build/tessdata/**/*
+build/**/*
+dist

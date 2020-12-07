@@ -14,10 +14,10 @@ try:
 except:
     pass
 
+# install with build script windows
 f = os.path.dirname(os.path.realpath(__file__)) + "\\tesseract\\tesseract.exe"
 if os.path.exists(f):
     pytesseract.pytesseract.tesseract_cmd = f
-
 
 if __name__ == "__main__":
     if is_windows:
