@@ -10,7 +10,7 @@ from PyQt5.QtGui import QPixmap, QKeyEvent, QPainter, QPen, QMouseEvent, QRegion
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QWidget
 
 
-class MainWindow(QMainWindow):
+class SnipWindow(QMainWindow):
 
     mouse_start = (0, 0)
     mouse_pos = (0, 0)

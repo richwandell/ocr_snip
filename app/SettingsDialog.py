@@ -2,13 +2,13 @@ import sys
 
 from PyQt5.QtWidgets import QApplication
 
-from app import SnipWindow
+from app.SettingsMainWindow import SettingsMainWindow
 
 
-class ScreenCap:
+class SettingsDialog:
 
     def __init__(self):
         app = QApplication(sys.argv)
-        window = SnipWindow(app)
+        window = SettingsMainWindow(app)
         window.show()
         app.exec_()

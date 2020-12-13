@@ -1,6 +1,8 @@
 import os
+import sys
 
 import pytesseract
+from PyQt5.QtWidgets import QApplication
 
 from app import *
 
@@ -19,8 +21,12 @@ f = os.path.dirname(os.path.realpath(__file__)) + "\\tesseract\\tesseract.exe"
 if os.path.exists(f):
     pytesseract.pytesseract.tesseract_cmd = f
 
+
 if __name__ == "__main__":
     if is_windows:
         WinSysTray()
+
+
+
 
 
