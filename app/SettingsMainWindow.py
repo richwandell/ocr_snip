@@ -13,7 +13,7 @@ from iso639 import languages
 
 class CustomListWidget(QWidget):
 
-    def __init__ (self, parent = None):
+    def __init__(self, parent=None):
         super(CustomListWidget, self).__init__(parent)
         self.textQVBoxLayout = QVBoxLayout()
         self.textUpQLabel = QLabel()
@@ -41,6 +41,7 @@ class CustomListWidget(QWidget):
 
     def setIcon (self, imagePath):
         self.iconQLabel.setPixmap(QPixmap(imagePath))
+
 
 class TabWidget(QTabWidget):
 
