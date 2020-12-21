@@ -1,16 +1,17 @@
-import threading
 import ctypes
+import multiprocessing
+import threading
 from ctypes import wintypes
 from functools import reduce
+from infi.systray import SysTrayIcon
 
 import win32con
-from PyQt5.QtWidgets import QApplication
 
 from app import ScreenCap
 from app.SettingsDialog import SettingsDialog
 
 
-class HotkeyThread(threading.Thread):
+class Hotkey(multiprocessing.Process):
 
     def run(self) -> None:
 
@@ -30,13 +31,16 @@ class HotkeyThread(threading.Thread):
 class WinSysTray:
 
     def __init__(self):
-        from infi.systray import SysTrayIcon
+        hkt = Hotkey()
+        hkt.start()
 
         def settings(systray):
+            nonlocal hkt
             SettingsDialog()
+            hkt.terminate()
+            hkt = Hotkey()
+            hkt.start()
 
-        hkt = HotkeyThread()
-        hkt.start()
         menu_options = (("Settings", None, settings),)
         systray = SysTrayIcon("lasso.ico", "OCR Snip", menu_options)
         systray.start()

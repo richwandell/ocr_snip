@@ -1,6 +1,7 @@
 import os
 import pickle
 from tkinter import Tk
+from iso639 import languages
 
 from PyQt5.QtCore import QModelIndex, Qt
 from PyQt5.QtGui import QIcon, QColor
@@ -10,34 +11,43 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QTabWidget, QWidget, QFor
 
 class TabWidget(QTabWidget):
 
+    right_layout: QGridLayout
+    right_widget: QWidget
+    main_layout: QGridLayout
+    main_widget: QWidget
+
     def __init__(self):
         super().__init__()
         self.langs = pickle.load(open(os.path.join(
             os.path.dirname(__file__),
             "..",
-            "langs.p"
+            "langs.pkl"
         ), "rb"))
 
         self.create_languages_tab()
 
-        self.tab2 = QWidget()
-        self.tab3 = QWidget()
-
-        self.addTab(self.tab2, "Tab 2")
-        self.addTab(self.tab3, "Tab 3")
-        self.tab2UI()
-        self.tab3UI()
-
     def lang_list_item_selected(self, item):
         print(item.data())
+        print(self.main_layout.removeWidget(self.right_widget))
+        self.right_widget = QWidget()
+        self.right_layout = QFormLayout()
+        install = QHBoxLayout()
+        install.addWidget(QPushButton("Install"))
+        self.right_layout.addRow(install)
+        self.right_widget.setLayout(self.right_layout)
+        self.main_layout.addWidget(self.right_widget, 0, 1)
 
     def create_languages_tab(self):
-        main_widget = QWidget()
-        main_layout = QGridLayout()
-        main_widget.setLayout(main_layout)
+        self.main_widget = QWidget()
+        self.main_layout = QGridLayout()
+        self.main_widget.setLayout(self.main_layout)
         lang_list = QListWidget()
         for i, lang in enumerate(self.langs):
-            lang_list.addItem(lang)
+            try:
+                l = languages.get(bibliographic=lang)
+                lang_list.addItem(l.inverted)
+            except KeyError as e:
+                pass
 
         for i in ["eng"]:
             items = lang_list.findItems(i, Qt.MatchExactly)
@@ -45,17 +55,17 @@ class TabWidget(QTabWidget):
                 item.setForeground(Qt.green)
 
         lang_list.clicked.connect(self.lang_list_item_selected)
-        main_layout.addWidget(lang_list, 0, 0)
+        self.main_layout.addWidget(lang_list, 0, 0)
 
-        right_widget = QWidget()
-        right_layout = QGridLayout()
-        right_widget.setLayout(right_layout)
-        main_layout.addWidget(right_widget, 0, 1)
+        self.right_widget = QWidget()
+        self.right_layout = QGridLayout()
+        self.right_widget.setLayout(self.right_layout)
+        self.main_layout.addWidget(self.right_widget, 0, 1)
 
-        main_layout.setColumnStretch(0, 1)
-        main_layout.setColumnStretch(1, 3)
+        self.main_layout.setColumnStretch(0, 1)
+        self.main_layout.setColumnStretch(1, 3)
 
-        self.addTab(main_widget, "Languages")
+        self.addTab(self.main_widget, "Languages")
 
     def tab2UI(self):
         layout = QFormLayout()

@@ -5,15 +5,15 @@ import numpy as np
 import pyperclip
 import pytesseract
 from PIL import ImageGrab
-from PyQt5.QtCore import Qt, QObject, QPointF, QPoint
-from PyQt5.QtGui import QPixmap, QKeyEvent, QPainter, QPen, QMouseEvent, QRegion, QPolygon
+from PyQt5.QtCore import Qt, QObject, QPoint
+from PyQt5.QtGui import QPixmap, QKeyEvent, QPainter, QPen, QMouseEvent, QRegion, QPolygon, QCursor
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QWidget
 
 
 class SnipWindow(QMainWindow):
-
     mouse_start = (0, 0)
     mouse_pos = (0, 0)
+    prev_mouse_pos = (0, 0)
     screen_dim = (0, 0)
     box_dim = (0, 0)
 
@@ -23,6 +23,7 @@ class SnipWindow(QMainWindow):
         self.tk = Tk()
         self.screen_dim = (self.tk.winfo_screenwidth(), self.tk.winfo_screenheight())
 
+        app.setOverrideCursor(QCursor(Qt.CrossCursor))
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_NoSystemBackground, True)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
@@ -44,6 +45,7 @@ class SnipWindow(QMainWindow):
                 except:
                     pass
                 recursive_set(child)
+
         QWidget.setMouseTracking(self, flag)
         recursive_set(self)
 
@@ -53,16 +55,9 @@ class SnipWindow(QMainWindow):
             self.app.quit()
 
     def mouseMoveEvent(self, e):
-        self.label.pixmap().fill(Qt.transparent)
-        painter = QPainter(self.label.pixmap())
         self.mouse_pos = (e.x(), e.y())
-
         if self.mouse_start != (0, 0):
             self.box_dim = (self.mouse_pos[0] - self.mouse_start[0], self.mouse_pos[1] - self.mouse_start[1])
-
-        painter.setPen(QPen(Qt.green, 5, Qt.DashLine))
-        painter.drawEllipse(QPointF(*self.mouse_pos), 20, 20)
-        painter.end()
         self.update()
 
     def mousePressEvent(self, e: QMouseEvent) -> None:
