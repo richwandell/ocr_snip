@@ -37,7 +37,8 @@ def build_windows():
     base = 'Win32GUI' if sys.platform == 'win32' else None
 
     tesseract_path = os.path.join(os.path.dirname(__file__), 'tesseract')
-    lasso_path = os.path.join(os.path.dirname(__file__), "lasso.ico")
+    images_path = os.path.join(os.path.dirname(__file__), "images")
+    lasso_path = os.path.join(os.path.dirname(__file__), "image", "lasso.ico")
 
     setup(
         name='OCR Snip',
@@ -47,7 +48,7 @@ def build_windows():
             'build_exe': {
                 'include_files': [
                     (tesseract_path, 'tesseract'),
-                    (lasso_path, "lasso.ico")
+                    (images_path, "images")
                 ]
             },
             'bdist_msi': {

@@ -1,5 +1,6 @@
 import ctypes
 import multiprocessing
+import os
 import threading
 from ctypes import wintypes
 from functools import reduce
@@ -42,7 +43,7 @@ class WinSysTray:
             hkt.start()
 
         menu_options = (("Settings", None, settings),)
-        systray = SysTrayIcon("lasso.ico", "OCR Snip", menu_options)
+        systray = SysTrayIcon(os.path.join("images", "lasso.ico"), "OCR Snip", menu_options)
         systray.start()
 
 
