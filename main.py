@@ -5,6 +5,7 @@ import pytesseract
 from PyQt5.QtWidgets import QApplication
 
 from app import *
+from app.SettingsDialog import SettingsDialog
 
 is_windows = False
 try:
@@ -25,7 +26,8 @@ if os.path.exists(f):
 if __name__ == "__main__":
     if is_windows:
         # ScreenCap()
-        WinSysTray()
+        # WinSysTray()
+        SettingsDialog()
 
 
 

@@ -47,11 +47,14 @@ class TabWidget(QTabWidget):
 
     lang_list: QListWidget
     selected_language: str
-    right_layout: QGridLayout
-    right_widget: QWidget
-    main_layout: QGridLayout
-    main_widget: QWidget
+    lang_right_layout: QGridLayout
+    lang_right_widget: QWidget
+    lang_main_layout: QGridLayout
+    lang_main_widget: QWidget
     languages: List[str]
+
+    hk_main_widget: QWidget
+    hk_main_layout: QGridLayout
 
     def __init__(self):
         super().__init__()
@@ -61,6 +64,7 @@ class TabWidget(QTabWidget):
             "langs.pkl"
         ), "rb"))
         self.languages = list(self.get_languages())
+        self.create_hotkey_tab()
         self.create_languages_tab()
 
     def install(self, item):
@@ -76,16 +80,16 @@ class TabWidget(QTabWidget):
             )
             urllib.request.urlretrieve(url, output)
             if os.path.exists(output):
-                self.main_layout.removeWidget(self.right_widget)
-                self.right_widget = QWidget()
-                self.right_layout = QFormLayout()
+                self.lang_main_layout.removeWidget(self.lang_right_widget)
+                self.lang_right_widget = QWidget()
+                self.lang_right_layout = QFormLayout()
                 remove = QHBoxLayout()
                 remove_button = QPushButton("Remove")
                 remove_button.clicked.connect(self.remove)
                 remove.addWidget(remove_button)
-                self.right_layout.addRow(remove)
-                self.right_widget.setLayout(self.right_layout)
-                self.main_layout.addWidget(self.right_widget, 0, 1)
+                self.lang_right_layout.addRow(remove)
+                self.lang_right_widget.setLayout(self.lang_right_layout)
+                self.lang_main_layout.addWidget(self.lang_right_widget, 0, 1)
                 self.languages.append(self.selected_language)
                 self.color_lang_list()
         except KeyError as e:
@@ -97,25 +101,25 @@ class TabWidget(QTabWidget):
 
     def lang_list_item_selected(self, item):
         self.selected_language = item.data()
-        self.main_layout.removeWidget(self.right_widget)
-        self.right_widget = QWidget()
-        self.right_layout = QFormLayout()
+        self.lang_main_layout.removeWidget(self.lang_right_widget)
+        self.lang_right_widget = QWidget()
+        self.lang_right_layout = QFormLayout()
 
         if self.selected_language in self.languages:
             remove = QHBoxLayout()
             remove_button = QPushButton("Remove")
             remove_button.clicked.connect(self.remove)
             remove.addWidget(remove_button)
-            self.right_layout.addRow(remove)
+            self.lang_right_layout.addRow(remove)
         else:
             install = QHBoxLayout()
             install_button = QPushButton("Install")
             install_button.clicked.connect(self.install)
             install.addWidget(install_button)
-            self.right_layout.addRow(install)
+            self.lang_right_layout.addRow(install)
 
-        self.right_widget.setLayout(self.right_layout)
-        self.main_layout.addWidget(self.right_widget, 0, 1)
+        self.lang_right_widget.setLayout(self.lang_right_layout)
+        self.lang_main_layout.addWidget(self.lang_right_widget, 0, 1)
 
     def get_languages(self):
         for file in os.listdir(os.path.join(
@@ -139,9 +143,9 @@ class TabWidget(QTabWidget):
                 item.setForeground(Qt.green)
 
     def create_languages_tab(self):
-        self.main_widget = QWidget()
-        self.main_layout = QGridLayout()
-        self.main_widget.setLayout(self.main_layout)
+        self.lang_main_widget = QWidget()
+        self.lang_main_layout = QGridLayout()
+        self.lang_main_widget.setLayout(self.lang_main_layout)
         self.lang_list = QListWidget()
         for i, lang in enumerate(self.langs):
             try:
@@ -153,17 +157,24 @@ class TabWidget(QTabWidget):
         self.color_lang_list()
 
         self.lang_list.clicked.connect(self.lang_list_item_selected)
-        self.main_layout.addWidget(self.lang_list, 0, 0)
+        self.lang_main_layout.addWidget(self.lang_list, 0, 0)
 
-        self.right_widget = QWidget()
-        self.right_layout = QGridLayout()
-        self.right_widget.setLayout(self.right_layout)
-        self.main_layout.addWidget(self.right_widget, 0, 1)
+        self.lang_right_widget = QWidget()
+        self.lang_right_layout = QGridLayout()
+        self.lang_right_widget.setLayout(self.lang_right_layout)
+        self.lang_main_layout.addWidget(self.lang_right_widget, 0, 1)
 
-        self.main_layout.setColumnStretch(0, 1)
-        self.main_layout.setColumnStretch(1, 3)
+        self.lang_main_layout.setColumnStretch(0, 1)
+        self.lang_main_layout.setColumnStretch(1, 3)
 
-        self.addTab(self.main_widget, "Languages")
+        self.addTab(self.lang_main_widget, "Languages")
+
+    def create_hotkey_tab(self):
+        self.hk_main_widget = QWidget()
+        self.hk_main_layout = QGridLayout()
+
+        self.addTab(self.hk_main_widget, "Hotkey")
+
 
 
 class SettingsMainWindow(QMainWindow):
