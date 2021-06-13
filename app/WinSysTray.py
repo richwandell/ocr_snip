@@ -43,7 +43,7 @@ class WinSysTray:
             hkt.start()
 
         menu_options = (("Settings", None, settings),)
-        systray = SysTrayIcon(os.path.join("images", "lasso.ico"), "OCR Snip", menu_options)
+        systray = SysTrayIcon(os.path.join(os.getcwd(), "images", "lasso.ico"), "OCR Snip", menu_options)
         systray.start()
 
 

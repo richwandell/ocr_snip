@@ -1,7 +1,6 @@
-import opcode
 import os
-import sys
 import shutil
+import sys
 
 from cx_Freeze import setup, Executable
 
@@ -38,7 +37,8 @@ def build_windows():
 
     tesseract_path = os.path.join(os.path.dirname(__file__), 'tesseract')
     images_path = os.path.join(os.path.dirname(__file__), "images")
-    lasso_path = os.path.join(os.path.dirname(__file__), "image", "lasso.ico")
+    lasso_path = os.path.join(os.path.dirname(__file__), "images", "lasso.ico")
+    langs_path = os.path.join(os.path.dirname(__file__), "langs.pkl")
 
     setup(
         name='OCR Snip',
@@ -48,7 +48,8 @@ def build_windows():
             'build_exe': {
                 'include_files': [
                     (tesseract_path, 'tesseract'),
-                    (images_path, "images")
+                    (images_path, "images"),
+                    (langs_path, "langs.pkl")
                 ]
             },
             'bdist_msi': {

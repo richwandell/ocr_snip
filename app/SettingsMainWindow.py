@@ -10,6 +10,8 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QTabWidget, QWidget, QFor
     QGridLayout, QListWidget, QDesktopWidget, QVBoxLayout, QPushButton, QLabel
 from iso639 import languages
 
+from app import CWDPATH
+
 
 class CustomListWidget(QWidget):
 
@@ -59,8 +61,7 @@ class TabWidget(QTabWidget):
     def __init__(self):
         super().__init__()
         self.langs = pickle.load(open(os.path.join(
-            os.path.dirname(__file__),
-            "..",
+            CWDPATH,
             "langs.pkl"
         ), "rb"))
         self.languages = list(self.get_languages())
@@ -72,8 +73,7 @@ class TabWidget(QTabWidget):
             lang = languages.get(name=self.selected_language)
             url = 'https://raw.githubusercontent.com/tesseract-ocr/tessdata/master/%s.traineddata' % lang.part3
             output = os.path.join(
-                os.path.dirname(__file__),
-                "..",
+                CWDPATH,
                 "tesseract",
                 "tessdata",
                 "%s.traineddata" % lang.part3
@@ -123,8 +123,7 @@ class TabWidget(QTabWidget):
 
     def get_languages(self):
         for file in os.listdir(os.path.join(
-            os.path.dirname(__file__),
-            "..",
+            CWDPATH,
             "tesseract",
             "tessdata"
         )):
@@ -176,7 +175,6 @@ class TabWidget(QTabWidget):
         self.addTab(self.hk_main_widget, "Hotkey")
 
 
-
 class SettingsMainWindow(QMainWindow):
 
     def __init__(self, app: QApplication):
@@ -198,4 +196,4 @@ class SettingsMainWindow(QMainWindow):
         rectangle = self.frameGeometry()
         rectangle.moveCenter(center)
         self.move(rectangle.topLeft())
-        self.setWindowIcon(QIcon(os.path.join("images", "lasso.ico")))
+        self.setWindowIcon(QIcon(os.path.join(CWDPATH, "images", "lasso.ico")))

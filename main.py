@@ -1,8 +1,4 @@
-import os
-import sys
-
 import pytesseract
-from PyQt5.QtWidgets import QApplication
 
 from app import *
 from app.SettingsDialog import SettingsDialog
